@@ -1,14 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap");
-
-/* CSS Variables for dynamic theming */
-:root {
-  --primary-color: #38b2ac;
-  --secondary-color: #f59e0b;
-  --background-light: #ffffff;
-  --background-dark: #0f1419;
-  --text-primary-light: #212529;
-  --text-primary-dark: #f8f9fa;
-}
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap");
 
 html,
 body,
@@ -16,152 +6,21 @@ body,
 .app {
   height: 100%;
   width: 100%;
-  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", sans-serif;
-  background: linear-gradient(135deg, #0f1419 0%, #1a202c 100%);
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden;
-  scroll-behavior: smooth;
+  font-family: "Inter", sans-serif;
+  background-color: #1f2026;
 }
-
-/* Enhanced scrollbar styling */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(45, 55, 72, 0.1);
-  border-radius: 4px;
+  background: #242427;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(135deg, #38b2ac, #319795);
-  border-radius: 4px;
-  transition: all 0.2s ease;
+  background: #48494e;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(135deg, #319795, #2c7a7b);
-  transform: scale(1.1);
-}
-
-::-webkit-scrollbar-corner {
-  background: transparent;
-}
-
-/* Firefox scrollbar */
-* {
-  scrollbar-width: thin;
-  scrollbar-color: #38b2ac rgba(45, 55, 72, 0.1);
-}
-
-/* Global animations and transitions */
-* {
-  box-sizing: border-box;
-}
-
-*,
-*::before,
-*::after {
-  transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-/* Loading animation */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateX(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes pulse {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.5;
-  }
-}
-
-@keyframes shimmer {
-  0% {
-    background-position: -200px 0;
-  }
-  100% {
-    background-position: calc(200px + 100%) 0;
-  }
-}
-
-/* Utility classes */
-.fade-in {
-  animation: fadeIn 0.6s ease-out;
-}
-
-.slide-in {
-  animation: slideIn 0.4s ease-out;
-}
-
-.pulse {
-  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-
-.shimmer {
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-  background-size: 200px 100%;
-  animation: shimmer 1.5s infinite;
-}
-
-/* Focus styles for accessibility */
-*:focus {
-  outline: 2px solid #38b2ac;
-  outline-offset: 2px;
-}
-
-/* Selection styles */
-::selection {
-  background-color: rgba(56, 178, 172, 0.3);
-  color: inherit;
-}
-
-::-moz-selection {
-  background-color: rgba(56, 178, 172, 0.3);
-  color: inherit;
-}
-
-/* Responsive typography */
-@media (max-width: 768px) {
-  html {
-    font-size: 14px;
-  }
-}
-
-@media (max-width: 480px) {
-  html {
-    font-size: 13px;
-  }
-}
-
-/* Print styles */
-@media print {
-  * {
-    background: white !important;
-    color: black !important;
-    box-shadow: none !important;
-  }
+::-webkit-scrollbar-track:hover {
+  background: #2a2b2f;
 }

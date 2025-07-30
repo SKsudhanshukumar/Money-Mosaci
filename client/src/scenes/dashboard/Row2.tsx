@@ -66,14 +66,14 @@ const Row2 = () => {
           title="Operational vs Non-Operational Expenses"
           sideText="+4%"
         />
-        <ResponsiveContainer width="100%" height="80%">
+        <ResponsiveContainer width="100%" height="100%">
           <LineChart
             data={operationalExpenses}
             margin={{
-              top: 15,
-              right: 25,
+              top: 20,
+              right: 0,
               left: -10,
-              bottom: 40,
+              bottom: 55,
             }}
           >
             <CartesianGrid vertical={false} stroke={palette.mode === 'light' ? palette.grey[300] : palette.grey[800]} />
@@ -161,11 +161,11 @@ const Row2 = () => {
       </DashboardBox>
       <DashboardBox gridArea="f">
         <BoxHeader title="Product Prices vs Expenses" sideText="+4%" />
-        <ResponsiveContainer width="100%" height="80%">
+        <ResponsiveContainer width="100%" height="100%">
           <ScatterChart
             data={productExpenseData}
             margin={{
-              top: 15,
+              top: 20,
               right: 25,
               bottom: 40,
               left: -10,
