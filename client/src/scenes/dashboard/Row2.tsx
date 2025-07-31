@@ -28,8 +28,11 @@ const pieData = [
 const Row2 = () => {
   const { palette } = useTheme();
   const pieColors = [palette.primary[800], palette.primary[300]];
-  const { data: operationalData } = useGetKpisQuery();
-  const { data: productData } = useGetProductsQuery();
+  const { data: operationalData, isLoading: kpiLoading, error: kpiError } = useGetKpisQuery();
+  const { data: productData, isLoading: productLoading, error: productError } = useGetProductsQuery();
+  
+  const isLoading = kpiLoading || productLoading;
+  const error = kpiError || productError;
 
   const operationalExpenses = useMemo(() => {
     return (
@@ -59,6 +62,50 @@ const Row2 = () => {
     );
   }, [productData]);
 
+  if (isLoading) {
+    return (
+      <>
+        <DashboardBox gridArea="d">
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+            Loading...
+          </div>
+        </DashboardBox>
+        <DashboardBox gridArea="e">
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+            Loading...
+          </div>
+        </DashboardBox>
+        <DashboardBox gridArea="f">
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+            Loading...
+          </div>
+        </DashboardBox>
+      </>
+    );
+  }
+
+  if (error) {
+    return (
+      <>
+        <DashboardBox gridArea="d">
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', color: 'red' }}>
+            Error loading data
+          </div>
+        </DashboardBox>
+        <DashboardBox gridArea="e">
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', color: 'red' }}>
+            Error loading data
+          </div>
+        </DashboardBox>
+        <DashboardBox gridArea="f">
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', color: 'red' }}>
+            Error loading data
+          </div>
+        </DashboardBox>
+      </>
+    );
+  }
+
   return (
     <>
       <DashboardBox gridArea="d">
@@ -66,7 +113,7 @@ const Row2 = () => {
           title="Operational vs Non-Operational Expenses"
           sideText="+4%"
         />
-        <ResponsiveContainer width="100%" height="100%">
+        <ResponsiveContainer width="100%" height="75%">
           <LineChart
             data={operationalExpenses}
             margin={{
@@ -161,7 +208,7 @@ const Row2 = () => {
       </DashboardBox>
       <DashboardBox gridArea="f">
         <BoxHeader title="Product Prices vs Expenses" sideText="+4%" />
-        <ResponsiveContainer width="100%" height="100%">
+        <ResponsiveContainer width="100%" height="75%">
           <ScatterChart
             data={productExpenseData}
             margin={{

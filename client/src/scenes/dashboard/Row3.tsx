@@ -15,9 +15,12 @@ const Row3 = () => {
   const { palette } = useTheme();
   const pieColors = [palette.primary[800], palette.primary[500]];
 
-  const { data: kpiData } = useGetKpisQuery();
-  const { data: productData } = useGetProductsQuery();
-  const { data: transactionData } = useGetTransactionsQuery();
+  const { data: kpiData, isLoading: kpiLoading, error: kpiError } = useGetKpisQuery();
+  const { data: productData, isLoading: productLoading, error: productError } = useGetProductsQuery();
+  const { data: transactionData, isLoading: transactionLoading, error: transactionError } = useGetTransactionsQuery();
+  
+  const isLoading = kpiLoading || productLoading || transactionLoading;
+  const error = kpiError || productError || transactionError;
 
   const pieChartData = useMemo(() => {
     if (kpiData) {
@@ -85,6 +88,50 @@ const Row3 = () => {
         (params.value as Array<string>).length,
     },
   ];
+
+  if (isLoading) {
+    return (
+      <>
+        <DashboardBox gridArea="g">
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+            Loading...
+          </div>
+        </DashboardBox>
+        <DashboardBox gridArea="h">
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+            Loading...
+          </div>
+        </DashboardBox>
+        <DashboardBox gridArea="i">
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+            Loading...
+          </div>
+        </DashboardBox>
+      </>
+    );
+  }
+
+  if (error) {
+    return (
+      <>
+        <DashboardBox gridArea="g">
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', color: 'red' }}>
+            Error loading data
+          </div>
+        </DashboardBox>
+        <DashboardBox gridArea="h">
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', color: 'red' }}>
+            Error loading data
+          </div>
+        </DashboardBox>
+        <DashboardBox gridArea="i">
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', color: 'red' }}>
+            Error loading data
+          </div>
+        </DashboardBox>
+      </>
+    );
+  }
 
   return (
     <>

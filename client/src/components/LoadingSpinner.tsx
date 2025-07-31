@@ -52,7 +52,7 @@ const LoadingSpinner = ({
             size={size}
             thickness={4}
             sx={{
-              color: palette.primary[500],
+              color: palette.primary.main,
               '& .MuiCircularProgress-circle': {
                 strokeLinecap: 'round',
               },
@@ -67,15 +67,22 @@ const LoadingSpinner = ({
               width: size * 0.6,
               height: size * 0.6,
               borderRadius: '50%',
-              background: `linear-gradient(135deg, ${palette.primary[500]}20, ${palette.secondary[500]}20)`,
+              background: `linear-gradient(135deg, ${palette.primary.main}20, ${palette.secondary.main}20)`,
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
+              backdropFilter: 'blur(10px)',
             }}
           >
             <motion.div
-              animate={{ rotate: 360 }}
-              transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+              animate={{ 
+                rotate: 360,
+                scale: [1, 1.1, 1],
+              }}
+              transition={{ 
+                rotate: { duration: 2, repeat: Infinity, ease: "linear" },
+                scale: { duration: 1.5, repeat: Infinity, ease: "easeInOut" }
+              }}
               style={{
                 fontSize: size * 0.3,
               }}
