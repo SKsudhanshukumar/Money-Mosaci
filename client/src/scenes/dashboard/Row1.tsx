@@ -129,7 +129,7 @@ const Row1 = () => {
 
   return (
     <>
-      <DashboardBox gridArea="a" className="hover-lift">
+      <DashboardBox gridArea="a" className="hover-lift grid-item-enter equal-grid-item">
         <BoxHeader
           icon={<TrendingUpIcon />}
           title="Revenue and Expenses"
@@ -222,7 +222,7 @@ const Row1 = () => {
           </ResponsiveContainer>
         </DashboardBox>
       
-      <DashboardBox gridArea="b" className="hover-lift">
+      <DashboardBox gridArea="b" className="hover-lift grid-item-enter equal-grid-item">
         <BoxHeader
           icon={<ShowChartIcon />}
           title="Profit and Revenue"
@@ -303,7 +303,7 @@ const Row1 = () => {
           </ResponsiveContainer>
         </DashboardBox>
       
-      <DashboardBox gridArea="c" className="hover-lift">
+      <DashboardBox gridArea="c" className="hover-lift grid-item-enter equal-grid-item">
         <BoxHeader
           icon={<BarChartIcon />}
           title="Revenue Month by Month"

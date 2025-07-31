@@ -4,61 +4,36 @@ import Row1 from "./Row1";
 import Row2 from "./Row2";
 import Row3 from "./Row3";
 
+// Equal area grid templates - each area gets the same space
 const gridTemplateLargeScreens = `
   "a b c"
-  "a b c"
-  "a b c"
-  "a b f"
   "d e f"
-  "d e f"
-  "d h i"
   "g h i"
-  "g h j"
-  "g h j"
+  "j k l"
 `;
 
 const gridTemplateMediumScreens = `
-  "a a b"
-  "a a b"
-  "c c c"
-  "d d e"
-  "f f f"
-  "g g h"
-  "i i i"
-  "j j j"
+  "a b"
+  "c d"
+  "e f"
+  "g h"
+  "i j"
+  "k l"
 `;
 
 const gridTemplateSmallScreens = `
   "a"
-  "a"
-  "a"
-  "a"
-  "b"
-  "b"
-  "b"
   "b"
   "c"
-  "c"
-  "c"
-  "d"
-  "d"
   "d"
   "e"
-  "e"
-  "f"
-  "f"
   "f"
   "g"
-  "g"
-  "g"
-  "h"
-  "h"
-  "h"
   "h"
   "i"
-  "i"
   "j"
-  "j"
+  "k"
+  "l"
 `;
 
 const Dashboard = () => {
@@ -76,22 +51,25 @@ const Dashboard = () => {
   const getGridConfig = () => {
     if (isLargeScreen) {
       return {
-        gridTemplateColumns: "repeat(3, minmax(370px, 1fr))",
-        gridTemplateRows: "repeat(10, 120px)",
+        gridTemplateColumns: "repeat(3, 1fr)", // Equal width columns
+        gridTemplateRows: "repeat(4, 1fr)", // Equal height rows
         gap: "1.5rem",
+        minHeight: "calc(100vh - 120px)", // Ensure full viewport usage
       };
     }
     if (isMediumScreen) {
       return {
-        gridTemplateColumns: "repeat(3, 1fr)",
-        gridTemplateRows: "repeat(8, 150px)",
+        gridTemplateColumns: "repeat(2, 1fr)", // Equal width columns
+        gridTemplateRows: "repeat(6, 1fr)", // Equal height rows
         gap: "1rem",
+        minHeight: "calc(100vh - 120px)",
       };
     }
     return {
-      gridTemplateColumns: "1fr",
-      gridTemplateRows: "repeat(10, 400px)",
+      gridTemplateColumns: "1fr", // Single column
+      gridTemplateRows: "repeat(12, 1fr)", // Equal height rows
       gap: "1rem",
+      minHeight: "calc(100vh - 120px)",
     };
   };
 
@@ -103,9 +81,9 @@ const Dashboard = () => {
     >
       <Container maxWidth={false} sx={{ px: { xs: 1, sm: 2, md: 3 } }}>
         <Box
+          className="dashboard-grid equal-grid-container"
           sx={{
             width: "100%",
-            minHeight: "100vh",
             display: "grid",
             gridTemplateAreas: getGridTemplate(),
             ...getGridConfig(),

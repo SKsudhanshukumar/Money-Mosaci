@@ -107,6 +107,21 @@ const Row3 = () => {
             Loading...
           </div>
         </DashboardBox>
+        <DashboardBox gridArea="j">
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+            Loading...
+          </div>
+        </DashboardBox>
+        <DashboardBox gridArea="k">
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+            Loading...
+          </div>
+        </DashboardBox>
+        <DashboardBox gridArea="l">
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+            Loading...
+          </div>
+        </DashboardBox>
       </>
     );
   }
@@ -129,13 +144,28 @@ const Row3 = () => {
             Error loading data
           </div>
         </DashboardBox>
+        <DashboardBox gridArea="j">
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', color: 'red' }}>
+            Error loading data
+          </div>
+        </DashboardBox>
+        <DashboardBox gridArea="k">
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', color: 'red' }}>
+            Error loading data
+          </div>
+        </DashboardBox>
+        <DashboardBox gridArea="l">
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', color: 'red' }}>
+            Error loading data
+          </div>
+        </DashboardBox>
       </>
     );
   }
 
   return (
     <>
-      <DashboardBox gridArea="g">
+      <DashboardBox gridArea="g" className="grid-item-enter equal-grid-item">
         <BoxHeader
           title="List of Products"
           sideText={`${productData?.length} products`}
@@ -170,7 +200,7 @@ const Row3 = () => {
           />
         </Box>
       </DashboardBox>
-      <DashboardBox gridArea="h">
+      <DashboardBox gridArea="h" className="grid-item-enter equal-grid-item">
         <BoxHeader
           title="Recent Orders"
           sideText={`${transactionData?.length} latest transactions`}
@@ -205,7 +235,7 @@ const Row3 = () => {
           />
         </Box>
       </DashboardBox>
-      <DashboardBox gridArea="i">
+      <DashboardBox gridArea="i" className="grid-item-enter equal-grid-item">
         <BoxHeader title="Expense Breakdown By Category" sideText="+4%" />
         <FlexBetween mt="0.5rem" gap="0.5rem" p="0 1rem" textAlign="center">
           {pieChartData?.map((data, i) => (
@@ -228,6 +258,136 @@ const Row3 = () => {
             </Box>
           ))}
         </FlexBetween>
+      </DashboardBox>
+      
+      <DashboardBox gridArea="j" className="grid-item-enter equal-grid-item">
+        <BoxHeader title="Key Performance Metrics" sideText="Monthly" />
+        <Box p="1rem" height="75%">
+          <FlexBetween mb="1rem">
+            <Typography variant="h6" color={palette.text.secondary}>
+              Revenue Growth
+            </Typography>
+            <Typography variant="h4" color={palette.primary.main}>
+              +12.5%
+            </Typography>
+          </FlexBetween>
+          <FlexBetween mb="1rem">
+            <Typography variant="h6" color={palette.text.secondary}>
+              Profit Margin
+            </Typography>
+            <Typography variant="h4" color={palette.secondary.main}>
+              18.3%
+            </Typography>
+          </FlexBetween>
+          <FlexBetween mb="1rem">
+            <Typography variant="h6" color={palette.text.secondary}>
+              Customer Acquisition
+            </Typography>
+            <Typography variant="h4" color={palette.tertiary.main}>
+              +8.7%
+            </Typography>
+          </FlexBetween>
+          <FlexBetween>
+            <Typography variant="h6" color={palette.text.secondary}>
+              Operating Efficiency
+            </Typography>
+            <Typography variant="h4" color={palette.primary.light}>
+              94.2%
+            </Typography>
+          </FlexBetween>
+        </Box>
+      </DashboardBox>
+      
+      <DashboardBox gridArea="k" className="grid-item-enter equal-grid-item">
+        <BoxHeader title="Financial Health Score" sideText="Excellent" />
+        <Box p="1rem" height="75%" display="flex" flexDirection="column" justifyContent="center" alignItems="center">
+          <Box 
+            width="120px" 
+            height="120px" 
+            borderRadius="50%" 
+            display="flex" 
+            alignItems="center" 
+            justifyContent="center"
+            sx={{
+              background: `conic-gradient(${palette.primary.main} 0deg 306deg, ${palette.grey[300]} 306deg 360deg)`,
+              position: 'relative',
+              '&::before': {
+                content: '""',
+                position: 'absolute',
+                width: '80px',
+                height: '80px',
+                borderRadius: '50%',
+                backgroundColor: palette.background.paper,
+              }
+            }}
+          >
+            <Typography variant="h2" color={palette.primary.main} sx={{ zIndex: 1 }}>
+              85
+            </Typography>
+          </Box>
+          <Typography variant="h6" mt="1rem" textAlign="center" color={palette.text.secondary}>
+            Strong financial position with healthy cash flow and growth metrics
+          </Typography>
+        </Box>
+      </DashboardBox>
+      
+      <DashboardBox gridArea="l" className="grid-item-enter equal-grid-item">
+        <BoxHeader title="Quick Actions" sideText="Dashboard" />
+        <Box p="1rem" height="75%" display="flex" flexDirection="column" gap="0.8rem">
+          <Box 
+            p="0.8rem" 
+            borderRadius="8px" 
+            sx={{ 
+              backgroundColor: palette.primary.main + '20',
+              border: `1px solid ${palette.primary.main}40`,
+              cursor: 'pointer',
+              '&:hover': { backgroundColor: palette.primary.main + '30' }
+            }}
+          >
+            <Typography variant="h6" color={palette.primary.main}>
+              Generate Report
+            </Typography>
+            <Typography variant="body2" color={palette.text.secondary}>
+              Create monthly financial summary
+            </Typography>
+          </Box>
+          
+          <Box 
+            p="0.8rem" 
+            borderRadius="8px" 
+            sx={{ 
+              backgroundColor: palette.secondary.main + '20',
+              border: `1px solid ${palette.secondary.main}40`,
+              cursor: 'pointer',
+              '&:hover': { backgroundColor: palette.secondary.main + '30' }
+            }}
+          >
+            <Typography variant="h6" color={palette.secondary.main}>
+              Budget Planning
+            </Typography>
+            <Typography variant="body2" color={palette.text.secondary}>
+              Set up next quarter budget
+            </Typography>
+          </Box>
+          
+          <Box 
+            p="0.8rem" 
+            borderRadius="8px" 
+            sx={{ 
+              backgroundColor: palette.tertiary.main + '20',
+              border: `1px solid ${palette.tertiary.main}40`,
+              cursor: 'pointer',
+              '&:hover': { backgroundColor: palette.tertiary.main + '30' }
+            }}
+          >
+            <Typography variant="h6" color={palette.tertiary.main}>
+              Export Data
+            </Typography>
+            <Typography variant="body2" color={palette.text.secondary}>
+              Download financial data
+            </Typography>
+          </Box>
+        </Box>
       </DashboardBox>
     </>
   );

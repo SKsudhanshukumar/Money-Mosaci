@@ -6,7 +6,12 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "start": "node index.js",
+    "stop": "node server-manager.js stop",
+    "restart": "node server-manager.js restart",
+    "status": "node server-manager.js status",
+    "kill": "node server-manager.js kill"
   },
   "keywords": [],
   "author": "",
