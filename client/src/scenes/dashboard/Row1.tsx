@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 import TrendingUpIcon from "@mui/icons-material/TrendingUp";
 import BarChartIcon from "@mui/icons-material/BarChart";
 import ShowChartIcon from "@mui/icons-material/ShowChart";
+import { calculateRevenueGrowth, calculateProfitGrowth } from "../../utils/calculations";
 import {
   ResponsiveContainer,
   CartesianGrid,
@@ -74,6 +75,19 @@ const Row1 = () => {
     );
   }, [data]);
 
+  // Calculate dynamic percentage changes
+  const revenueGrowth = useMemo(() => {
+    return data && data[0] && data[0].monthlyData 
+      ? calculateRevenueGrowth(data[0].monthlyData)
+      : "+0%";
+  }, [data]);
+
+  const profitGrowth = useMemo(() => {
+    return data && data[0] && data[0].monthlyData 
+      ? calculateProfitGrowth(data[0].monthlyData)
+      : "+0%";
+  }, [data]);
+
   console.log('Final processed data:', { revenue, revenueExpenses, revenueProfit });
 
   // Test data for debugging
@@ -134,8 +148,8 @@ const Row1 = () => {
           icon={<TrendingUpIcon />}
           title="Revenue and Expenses"
           subtitle="Monthly comparison of revenue vs expenses"
-          sideText="+4%"
-          trend="up"
+          sideText={revenueGrowth}
+          trend={revenueGrowth.startsWith('+') ? "up" : "down"}
         />
         <ResponsiveContainer width="100%" height="75%">
           <AreaChart
@@ -227,8 +241,8 @@ const Row1 = () => {
           icon={<ShowChartIcon />}
           title="Profit and Revenue"
           subtitle="Dual-axis comparison of profit vs revenue trends"
-          sideText="+4%"
-          trend="up"
+          sideText={profitGrowth}
+          trend={profitGrowth.startsWith('+') ? "up" : "down"}
         />
         <ResponsiveContainer width="100%" height="75%">
           <LineChart
@@ -308,8 +322,8 @@ const Row1 = () => {
           icon={<BarChartIcon />}
           title="Revenue Month by Month"
           subtitle="Monthly revenue breakdown with growth trends"
-          sideText="+4%"
-          trend="up"
+          sideText={revenueGrowth}
+          trend={revenueGrowth.startsWith('+') ? "up" : "down"}
         />
         <ResponsiveContainer width="100%" height="75%">
           <BarChart

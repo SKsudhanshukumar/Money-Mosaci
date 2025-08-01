@@ -10,6 +10,7 @@ import { Box, Typography, useTheme } from "@mui/material";
 import { DataGrid, GridCellParams } from "@mui/x-data-grid";
 import React, { useMemo } from "react";
 import { Cell, Pie, PieChart } from "recharts";
+import { calculateExpenseCategoryGrowth, calculateRevenueGrowth, calculateProfitGrowth } from "../../utils/calculations";
 
 const Row3 = () => {
   const { palette } = useTheme();
@@ -88,6 +89,49 @@ const Row3 = () => {
         (params.value as Array<string>).length,
     },
   ];
+
+  // Calculate dynamic percentage changes
+  const expenseCategoryGrowth = useMemo(() => {
+    return kpiData && kpiData[0] && kpiData[0].expensesByCategory && kpiData[0].totalExpenses
+      ? calculateExpenseCategoryGrowth(kpiData[0].expensesByCategory, kpiData[0].totalExpenses)
+      : "+0%";
+  }, [kpiData]);
+
+  const revenueGrowthValue = useMemo(() => {
+    return kpiData && kpiData[0] && kpiData[0].monthlyData 
+      ? calculateRevenueGrowth(kpiData[0].monthlyData)
+      : "+0%";
+  }, [kpiData]);
+
+  const profitGrowthValue = useMemo(() => {
+    return kpiData && kpiData[0] && kpiData[0].monthlyData 
+      ? calculateProfitGrowth(kpiData[0].monthlyData)
+      : "+0%";
+  }, [kpiData]);
+
+  // Calculate financial health score based on performance metrics
+  const financialHealthScore = useMemo(() => {
+    if (!kpiData || !kpiData[0]) return 50;
+    
+    const revenueGrowthNum = parseFloat(revenueGrowthValue.replace(/[+%]/g, ''));
+    const profitGrowthNum = parseFloat(profitGrowthValue.replace(/[+%]/g, ''));
+    const expenseEfficiencyNum = parseFloat(expenseCategoryGrowth.replace(/[+%]/g, ''));
+    
+    // Base score of 50, add points for positive metrics
+    let score = 50;
+    if (revenueGrowthNum > 0) score += Math.min(revenueGrowthNum * 2, 20);
+    if (profitGrowthNum > 0) score += Math.min(profitGrowthNum * 2, 20);
+    if (expenseEfficiencyNum > 0) score += Math.min(expenseEfficiencyNum * 1.5, 15);
+    
+    return Math.min(Math.max(Math.round(score), 0), 100);
+  }, [revenueGrowthValue, profitGrowthValue, expenseCategoryGrowth, kpiData]);
+
+  const healthScoreLabel = useMemo(() => {
+    if (financialHealthScore >= 80) return "Excellent";
+    if (financialHealthScore >= 60) return "Good";
+    if (financialHealthScore >= 40) return "Fair";
+    return "Needs Improvement";
+  }, [financialHealthScore]);
 
   if (isLoading) {
     return (
@@ -236,7 +280,7 @@ const Row3 = () => {
         </Box>
       </DashboardBox>
       <DashboardBox gridArea="i" className="grid-item-enter equal-grid-item">
-        <BoxHeader title="Expense Breakdown By Category" sideText="+4%" />
+        <BoxHeader title="Expense Breakdown By Category" sideText={expenseCategoryGrowth} />
         <FlexBetween mt="0.5rem" gap="0.5rem" p="0 1rem" textAlign="center">
           {pieChartData?.map((data, i) => (
             <Box key={`${data[0].name}-${i}`}>
@@ -268,38 +312,38 @@ const Row3 = () => {
               Revenue Growth
             </Typography>
             <Typography variant="h4" color={palette.primary.main}>
-              +12.5%
+              {revenueGrowthValue}
             </Typography>
           </FlexBetween>
           <FlexBetween mb="1rem">
             <Typography variant="h6" color={palette.text.secondary}>
-              Profit Margin
+              Profit Growth
             </Typography>
             <Typography variant="h4" color={palette.secondary.main}>
-              18.3%
+              {profitGrowthValue}
             </Typography>
           </FlexBetween>
           <FlexBetween mb="1rem">
             <Typography variant="h6" color={palette.text.secondary}>
-              Customer Acquisition
+              Expense Efficiency
             </Typography>
             <Typography variant="h4" color={palette.tertiary.main}>
-              +8.7%
+              {expenseCategoryGrowth}
             </Typography>
           </FlexBetween>
           <FlexBetween>
             <Typography variant="h6" color={palette.text.secondary}>
-              Operating Efficiency
+              Overall Performance
             </Typography>
             <Typography variant="h4" color={palette.primary.light}>
-              94.2%
+              {revenueGrowthValue.startsWith('+') && profitGrowthValue.startsWith('+') ? 'Excellent' : 'Good'}
             </Typography>
           </FlexBetween>
         </Box>
       </DashboardBox>
       
       <DashboardBox gridArea="k" className="grid-item-enter equal-grid-item">
-        <BoxHeader title="Financial Health Score" sideText="Excellent" />
+        <BoxHeader title="Financial Health Score" sideText={healthScoreLabel} />
         <Box p="1rem" height="75%" display="flex" flexDirection="column" justifyContent="center" alignItems="center">
           <Box 
             width="120px" 
@@ -309,7 +353,7 @@ const Row3 = () => {
             alignItems="center" 
             justifyContent="center"
             sx={{
-              background: `conic-gradient(${palette.primary.main} 0deg 306deg, ${palette.grey[300]} 306deg 360deg)`,
+              background: `conic-gradient(${palette.primary.main} 0deg ${(financialHealthScore / 100) * 360}deg, ${palette.grey[300]} ${(financialHealthScore / 100) * 360}deg 360deg)`,
               position: 'relative',
               '&::before': {
                 content: '""',
@@ -322,11 +366,18 @@ const Row3 = () => {
             }}
           >
             <Typography variant="h2" color={palette.primary.main} sx={{ zIndex: 1 }}>
-              85
+              {financialHealthScore}
             </Typography>
           </Box>
           <Typography variant="h6" mt="1rem" textAlign="center" color={palette.text.secondary}>
-            Strong financial position with healthy cash flow and growth metrics
+            {financialHealthScore >= 80 
+              ? "Excellent financial position with strong growth metrics"
+              : financialHealthScore >= 60
+              ? "Good financial health with positive trends"
+              : financialHealthScore >= 40
+              ? "Fair performance with room for improvement"
+              : "Financial metrics need attention and improvement"
+            }
           </Typography>
         </Box>
       </DashboardBox>

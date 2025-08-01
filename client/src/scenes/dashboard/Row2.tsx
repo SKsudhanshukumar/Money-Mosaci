@@ -4,6 +4,7 @@ import FlexBetween from "../../components/FlexBetween";
 import { useGetKpisQuery, useGetProductsQuery } from "../../state/api";
 import { Box, Typography, useTheme } from "@mui/material";
 import React, { useMemo } from "react";
+import { calculateOperationalExpensesGrowth, calculateProductMarginGrowth } from "../../utils/calculations";
 import {
   Tooltip,
   CartesianGrid,
@@ -62,6 +63,19 @@ const Row2 = () => {
     );
   }, [productData]);
 
+  // Calculate dynamic percentage changes
+  const operationalExpensesGrowth = useMemo(() => {
+    return operationalData && operationalData[0] && operationalData[0].monthlyData 
+      ? calculateOperationalExpensesGrowth(operationalData[0].monthlyData)
+      : "+0%";
+  }, [operationalData]);
+
+  const productMarginGrowth = useMemo(() => {
+    return productData 
+      ? calculateProductMarginGrowth(productData)
+      : "+0%";
+  }, [productData]);
+
   if (isLoading) {
     return (
       <>
@@ -111,7 +125,7 @@ const Row2 = () => {
       <DashboardBox gridArea="d" className="grid-item-enter equal-grid-item">
         <BoxHeader
           title="Operational vs Non-Operational Expenses"
-          sideText="+4%"
+          sideText={operationalExpensesGrowth}
         />
         <ResponsiveContainer width="100%" height="75%">
           <LineChart
@@ -160,7 +174,7 @@ const Row2 = () => {
         </ResponsiveContainer>
       </DashboardBox>
       <DashboardBox gridArea="e" className="grid-item-enter equal-grid-item">
-        <BoxHeader title="Campaigns and Targets" sideText="+4%" />
+        <BoxHeader title="Campaigns and Targets" sideText={productMarginGrowth} />
         <FlexBetween mt="0.25rem" gap="1.5rem" pr="1rem">
           <PieChart
             width={110}
@@ -207,7 +221,7 @@ const Row2 = () => {
         </FlexBetween>
       </DashboardBox>
       <DashboardBox gridArea="f" className="grid-item-enter equal-grid-item">
-        <BoxHeader title="Product Prices vs Expenses" sideText="+4%" />
+        <BoxHeader title="Product Prices vs Expenses" sideText={productMarginGrowth} />
         <ResponsiveContainer width="100%" height="75%">
           <ScatterChart
             data={productExpenseData}
