@@ -9,6 +9,7 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import Navbar from "./scenes/navbar";
 import Dashboard from "./scenes/dashboard";
 import Predictions from "./scenes/predictions";
+import Analytics from "./scenes/analytics";
 
 function AppContent() {
   const { mode } = useThemeMode();
@@ -54,6 +55,7 @@ function AppContent() {
             <Routes>
               <Route path="/" element={<Dashboard />} />
               <Route path="/predictions" element={<Predictions />} />
+              <Route path="/analytics" element={<Analytics />} />
             </Routes>
           </Box>
         </ThemeProvider>

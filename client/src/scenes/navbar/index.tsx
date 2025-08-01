@@ -5,6 +5,7 @@ import LightModeIcon from "@mui/icons-material/LightMode";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import TrendingUpIcon from "@mui/icons-material/TrendingUp";
+import AnalyticsIcon from "@mui/icons-material/Analytics";
 import { 
   Box, 
   Typography, 
@@ -34,6 +35,8 @@ const Navbar = (props: Props) => {
       setSelected("dashboard");
     } else if (location.pathname === "/predictions") {
       setSelected("predictions");
+    } else if (location.pathname === "/analytics") {
+      setSelected("analytics");
     }
   }, [location.pathname]);
 
@@ -49,6 +52,12 @@ const Navbar = (props: Props) => {
       label: "Predictions",
       path: "/predictions",
       icon: <TrendingUpIcon sx={{ fontSize: "18px" }} />,
+    },
+    {
+      key: "analytics",
+      label: "Analytics",
+      path: "/analytics",
+      icon: <AnalyticsIcon sx={{ fontSize: "18px" }} />,
     },
   ];
   
