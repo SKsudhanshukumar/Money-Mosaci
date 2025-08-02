@@ -1,8 +1,17 @@
 import React, { Component, ErrorInfo, ReactNode } from 'react';
-import { Box, Typography, Button, useTheme, Paper } from '@mui/material';
-import { motion } from 'framer-motion';
-import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
-import RefreshIcon from '@mui/icons-material/Refresh';
+import {
+  Box,
+  Typography,
+  Button,
+  Card,
+  CardContent,
+  useTheme,
+} from '@mui/material';
+import {
+  Error as ErrorIcon,
+  Refresh as RefreshIcon,
+  Home as HomeIcon,
+} from '@mui/icons-material';
 
 interface Props {
   children: ReactNode;
@@ -11,181 +20,115 @@ interface Props {
 interface State {
   hasError: boolean;
   error?: Error;
+  errorInfo?: ErrorInfo;
 }
 
 class ErrorBoundary extends Component<Props, State> {
-  public state: State = {
-    hasError: false,
-  };
+  constructor(props: Props) {
+    super(props);
+    this.state = { hasError: false };
+  }
 
-  public static getDerivedStateFromError(error: Error): State {
+  static getDerivedStateFromError(error: Error): State {
     return { hasError: true, error };
   }
 
-  public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.error('Uncaught error:', error, errorInfo);
+  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+    console.error('Error caught by boundary:', error, errorInfo);
+    this.setState({ error, errorInfo });
   }
 
-  private handleRefresh = () => {
-    this.setState({ hasError: false, error: undefined });
+  handleReload = () => {
     window.location.reload();
   };
 
-  public render() {
+  handleGoHome = () => {
+    window.location.href = '/';
+  };
+
+  render() {
     if (this.state.hasError) {
-      return <ErrorFallback onRefresh={this.handleRefresh} error={this.state.error} />;
+      return (
+        <Box
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          minHeight="100vh"
+          bgcolor="background.default"
+          p={3}
+        >
+          <Card
+            sx={{
+              maxWidth: 500,
+              width: '100%',
+              textAlign: 'center',
+            }}
+          >
+            <CardContent sx={{ p: 4 }}>
+              <ErrorIcon
+                sx={{
+                  fontSize: 64,
+                  color: 'error.main',
+                  mb: 2,
+                }}
+              />
+              
+              <Typography variant="h5" fontWeight={600} gutterBottom>
+                Something went wrong
+              </Typography>
+              
+              <Typography variant="body1" color="text.secondary" mb={3}>
+                We're sorry, but something unexpected happened. Please try refreshing the page or go back to the homepage.
+              </Typography>
+
+              {process.env.NODE_ENV === 'development' && this.state.error && (
+                <Box
+                  sx={{
+                    textAlign: 'left',
+                    backgroundColor: 'grey.100',
+                    p: 2,
+                    borderRadius: 1,
+                    mb: 3,
+                    fontSize: '0.875rem',
+                    fontFamily: 'monospace',
+                    overflow: 'auto',
+                    maxHeight: 200,
+                  }}
+                >
+                  <Typography variant="caption" fontWeight={600} display="block" mb={1}>
+                    Error Details:
+                  </Typography>
+                  <pre style={{ margin: 0, whiteSpace: 'pre-wrap' }}>
+                    {this.state.error.toString()}
+                    {this.state.errorInfo?.componentStack}
+                  </pre>
+                </Box>
+              )}
+
+              <Box display="flex" gap={2} justifyContent="center">
+                <Button
+                  variant="contained"
+                  startIcon={<RefreshIcon />}
+                  onClick={this.handleReload}
+                >
+                  Refresh Page
+                </Button>
+                <Button
+                  variant="outlined"
+                  startIcon={<HomeIcon />}
+                  onClick={this.handleGoHome}
+                >
+                  Go Home
+                </Button>
+              </Box>
+            </CardContent>
+          </Card>
+        </Box>
+      );
     }
 
     return this.props.children;
   }
 }
-
-interface ErrorFallbackProps {
-  onRefresh: () => void;
-  error?: Error;
-}
-
-const ErrorFallback: React.FC<ErrorFallbackProps> = ({ onRefresh, error }) => {
-  const theme = useTheme();
-  const { palette } = theme;
-
-  return (
-    <Box
-      sx={{
-        minHeight: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        background: `linear-gradient(135deg, ${palette.background.default} 0%, ${palette.background.light} 100%)`,
-        p: 3,
-      }}
-    >
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-      >
-        <Paper
-          elevation={3}
-          sx={{
-            p: 4,
-            maxWidth: 500,
-            textAlign: 'center',
-            borderRadius: '16px',
-            background: palette.mode === 'light'
-              ? `linear-gradient(135deg, ${palette.background.paper}F0, ${palette.background.elevated}E0)`
-              : `linear-gradient(135deg, ${palette.background.paper}CC, ${palette.background.elevated}99)`,
-            backdropFilter: 'blur(10px)',
-            border: `1px solid ${palette.mode === 'light' ? palette.grey[700] : palette.grey[800]}`,
-          }}
-        >
-          <motion.div
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-          >
-            <Box
-              sx={{
-                width: 80,
-                height: 80,
-                borderRadius: '50%',
-                background: `linear-gradient(135deg, ${palette.error.main}20, ${palette.warning.main}20)`,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                mx: 'auto',
-                mb: 3,
-              }}
-            >
-              <ErrorOutlineIcon
-                sx={{
-                  fontSize: 40,
-                  color: palette.error.main,
-                }}
-              />
-            </Box>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-          >
-            <Typography
-              variant="h4"
-              sx={{
-                mb: 2,
-                fontWeight: 600,
-                color: palette.text.primary,
-              }}
-            >
-              Oops! Something went wrong
-            </Typography>
-
-            <Typography
-              variant="body1"
-              sx={{
-                mb: 3,
-                color: palette.text.secondary,
-                lineHeight: 1.6,
-              }}
-            >
-              We encountered an unexpected error while loading the application. 
-              Don't worry, this is usually temporary.
-            </Typography>
-
-            {error && (
-              <Box
-                sx={{
-                  p: 2,
-                  mb: 3,
-                  borderRadius: '8px',
-                  background: `${palette.error.main}10`,
-                  border: `1px solid ${palette.error.main}30`,
-                }}
-              >
-                <Typography
-                  variant="caption"
-                  sx={{
-                    color: palette.error.main,
-                    fontFamily: 'monospace',
-                    fontSize: '0.75rem',
-                    wordBreak: 'break-word',
-                  }}
-                >
-                  {error.message}
-                </Typography>
-              </Box>
-            )}
-
-            <Button
-              variant="contained"
-              startIcon={<RefreshIcon />}
-              onClick={onRefresh}
-              sx={{
-                background: `linear-gradient(135deg, ${palette.primary.main}, ${palette.secondary.main})`,
-                color: 'white',
-                px: 3,
-                py: 1.5,
-                borderRadius: '8px',
-                textTransform: 'none',
-                fontWeight: 600,
-                boxShadow: `0 4px 16px ${palette.primary.main}40`,
-                '&:hover': {
-                  background: `linear-gradient(135deg, ${palette.primary.dark}, ${palette.secondary.dark})`,
-                  transform: 'translateY(-2px)',
-                  boxShadow: `0 8px 24px ${palette.primary.main}60`,
-                },
-                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-              }}
-            >
-              Refresh Page
-            </Button>
-          </motion.div>
-        </Paper>
-      </motion.div>
-    </Box>
-  );
-};
 
 export default ErrorBoundary;

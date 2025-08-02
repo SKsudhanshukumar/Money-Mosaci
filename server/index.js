@@ -8,6 +8,8 @@ import morgan from "morgan";
 import kpiRoutes from "./routes/kpi.js";
 import productRoutes from "./routes/product.js";
 import transactionRoutes from "./routes/transaction.js";
+import csvDataRoutes from "./routes/csvData.js";
+import analyticsRoutes from "./routes/analytics.js";
 import KPI from "./models/KPI.js";
 import Product from "./models/Product.js";
 import Transaction from "./models/Transaction.js";
@@ -26,9 +28,17 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 
 /* ROUTES */
+// Test route
+app.get("/test", (req, res) => {
+  res.json({ message: "Server is working!" });
+});
+
 app.use("/kpi", kpiRoutes);
 app.use("/product", productRoutes);
 app.use("/transaction", transactionRoutes);
+app.use("/api/csv-data", csvDataRoutes);
+app.use("/analytics", analyticsRoutes);
+app.use("/dashboard", analyticsRoutes);
 
 /* MONGOOSE SETUP */
 

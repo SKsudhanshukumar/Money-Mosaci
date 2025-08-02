@@ -1,0 +1,21 @@
+id,amount,buyer,date,category,description,paymentMethod,status
+TXN001,1254.37,Jorrie Tidswell,2024-01-15,Electronics,Laptop purchase for office,Credit Card,Completed
+TXN002,2107.45,Alfonse Surridge,2024-01-16,Office Supplies,Bulk office furniture order,Bank Transfer,Completed
+TXN003,423.74,Flem Domenc,2024-01-17,Software,Annual software license,Credit Card,Completed
+TXN004,1856.67,Jordain Gilberthorpe,2024-01-18,Hardware,Server equipment upgrade,Purchase Order,Pending
+TXN005,1174.95,Thelma Christoforou,2024-01-19,Services,Consulting services Q1,Invoice,Completed
+TXN006,892.32,John Smith,2024-01-20,Marketing,Digital advertising campaign,Credit Card,Completed
+TXN007,2245.67,Jane Doe,2024-01-21,Equipment,Manufacturing equipment,Bank Transfer,Completed
+TXN008,567.89,Bob Johnson,2024-01-22,Utilities,Monthly utility bills,Auto Pay,Completed
+TXN009,1823.45,Alice Brown,2024-01-23,Travel,Business travel expenses,Corporate Card,Completed
+TXN010,1198.76,Charlie Wilson,2024-01-24,Training,Employee training program,Purchase Order,Completed
+TXN011,756.54,Diana Davis,2024-01-25,Maintenance,Equipment maintenance,Credit Card,Completed
+TXN012,2834.12,Edward Miller,2024-01-26,Technology,Cloud infrastructure,Subscription,Active
+TXN013,1445.89,Fiona Garcia,2024-01-27,Legal,Legal consultation fees,Bank Transfer,Completed
+TXN014,987.65,George Martinez,2024-01-28,Insurance,Business insurance premium,Auto Pay,Completed
+TXN015,1667.43,Helen Rodriguez,2024-01-29,Supplies,Raw materials purchase,Purchase Order,Completed
+TXN016,898.21,Ivan Lopez,2024-01-30,Communications,Phone and internet services,Subscription,Active
+TXN017,1889.54,Julia Gonzalez,2024-01-31,Research,Market research services,Invoice,Pending
+TXN018,1334.76,Kevin Anderson,2024-02-01,Development,Software development tools,Credit Card,Completed
+TXN019,2112.33,Laura Thomas,2024-02-02,Infrastructure,Office space rental,Bank Transfer,Completed
+TXN020,1278.91,Michael Taylor,2024-02-03,Professional,Accounting services,Invoice,Completed

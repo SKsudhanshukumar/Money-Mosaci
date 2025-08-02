@@ -1,0 +1,13 @@
+category,budgetAmount,actualAmount,period,startDate,endDate,variance,status,notes
+Marketing,15000.00,12450.75,Q1 2024,2024-01-01,2024-03-31,-2549.25,Under Budget,Digital campaigns performing well
+Technology,25000.00,28750.50,Q1 2024,2024-01-01,2024-03-31,3750.50,Over Budget,Unexpected server upgrade required
+Office Supplies,5000.00,4234.89,Q1 2024,2024-01-01,2024-03-31,-765.11,Under Budget,Bulk purchasing savings
+Travel,8000.00,9876.23,Q1 2024,2024-01-01,2024-03-31,1876.23,Over Budget,Additional client visits
+Training,10000.00,7500.00,Q1 2024,2024-01-01,2024-03-31,-2500.00,Under Budget,Online training more cost-effective
+Utilities,3000.00,3245.67,Q1 2024,2024-01-01,2024-03-31,245.67,Over Budget,Higher energy costs in winter
+Insurance,12000.00,12000.00,Q1 2024,2024-01-01,2024-03-31,0.00,On Budget,Fixed premium payments
+Legal,7500.00,8950.00,Q1 2024,2024-01-01,2024-03-31,1450.00,Over Budget,Contract negotiations required
+Maintenance,4000.00,3567.45,Q1 2024,2024-01-01,2024-03-31,-432.55,Under Budget,Preventive maintenance effective
+Research,6000.00,5234.78,Q1 2024,2024-01-01,2024-03-31,-765.22,Under Budget,In-house research capabilities
+Equipment,20000.00,18750.00,Q1 2024,2024-01-01,2024-03-31,-1250.00,Under Budget,Negotiated better equipment prices
+Communications,2500.00,2678.90,Q1 2024,2024-01-01,2024-03-31,178.90,Over Budget,Additional phone lines needed
